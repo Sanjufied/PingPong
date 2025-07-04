@@ -13,7 +13,8 @@ class main:
         self.clock = pygame.time.Clock()
         self.player1 = pygame.rect.Rect(30 , 100 , 30 , 90)
         self.player2 = pygame.rect.Rect(1920 - 30 - 30 , 100 , 30 , 90)
-        self.box = pygame.rect.Rect(1920/2 , 1080/2 , 20 , 20)
+        self.box = pygame.rect.FRect(1920/2 , 1080/2 , 20 , 20)
+        self.direction = pygame.Vector2(1,1)
     
     def run(self):
         while True:
@@ -28,6 +29,7 @@ class main:
 
             pygame.display.flip()
             self._inputs(dt)
+            self._box_movement(dt)
 
 
     def _inputs(self , dt):
@@ -43,6 +45,22 @@ class main:
 
         if keypressed[pygame.K_DOWN]:
             self.player2.y += 2 * dt
+
+    def _box_movement(self ,dt):
+        
+        if self.box.bottom > 1080:
+            self.direction = pygame.Vector2(1 ,-1)
+
+        if self.box.top < 0:
+            self.direction = pygame.Vector2(1 ,1)
+
+        self.box.center += self.direction * dt * 0.5
+
+        if self.box.left > 1920 :
+            self.box.center = pygame.Vector2(1920/2 , 1080 /2)
+
+        
+            
 
             
 
