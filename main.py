@@ -19,13 +19,31 @@ class main:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT : sys.exit()
+            
+            dt = self.clock.tick()
             self.screen.fill((0,0,0))
             pygame.draw.rect(self.screen , "#da16af" , self.player1)
             pygame.draw.rect(self.screen , "#da16af" , self.player2)
             pygame.draw.rect(self.screen , "#da16af" , self.box)
 
             pygame.display.flip()
-            dt = self.clock.tick()
+            self._inputs(dt)
+
+
+    def _inputs(self , dt):
+        keypressed = pygame.key.get_pressed()
+        if keypressed[pygame.K_w]:
+            self.player1.y -= 2 * dt 
+
+        if keypressed[pygame.K_s]:
+            self.player1.y += 2 * dt
+
+        if keypressed[pygame.K_UP]:
+            self.player2.y -= 2 * dt
+
+        if keypressed[pygame.K_DOWN]:
+            self.player2.y += 2 * dt
+
             
 
 
